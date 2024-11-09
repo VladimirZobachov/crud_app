@@ -52,6 +52,57 @@ function createJsonResponse(bool $success, $result, Response $response): Respons
     return $response->withHeader('Content-Type', 'application/json');
 }
 
+/**
+ * API description on the index route.
+ */
+$app->get('/', function (Request $request, Response $response) {
+    $apiDescription = [
+        'API' => 'User CRUD API',
+        'Version' => '1.0.0',
+        'Description' => 'This is a simple CRUD API for managing user information.',
+        'Endpoints' => [
+            '/create' => [
+                'method' => 'POST',
+                'description' => 'Create a new user.',
+                'parameters' => [
+                    'full_name' => 'string - Required',
+                    'role' => 'string - Required',
+                    'efficiency' => 'integer - Required'
+                ]
+            ],
+            '/get' => [
+                'method' => 'GET',
+                'description' => 'Retrieve all users or a specific user by ID.',
+                'parameters' => [
+                    'user_id' => 'integer - Optional',
+                    'role' => 'string - Optional'
+                ]
+            ],
+            '/update/{user_id}' => [
+                'method' => 'PATCH',
+                'description' => 'Update a specific user by ID.',
+                'parameters' => [
+                    'user_id' => 'integer - Required',
+                    'full_name' => 'string - Optional',
+                    'role' => 'string - Optional',
+                    'efficiency' => 'integer - Optional'
+                ]
+            ],
+            '/delete' => [
+                'method' => 'DELETE',
+                'description' => 'Delete a user by ID or delete all users if no ID is provided.',
+                'parameters' => [
+                    'user_id' => 'integer - Optional'
+                ]
+            ]
+        ]
+    ];
+
+    // Output as JSON
+    $response->getBody()->write(json_encode($apiDescription, JSON_PRETTY_PRINT));
+    return $response->withHeader('Content-Type', 'application/json');
+});
+
 // POST /create
 $app->post('/create', function (Request $request, Response $response) {
     $data = json_decode($request->getBody()->getContents(), true);
