@@ -20,12 +20,13 @@ $dotenv->load();
  */
 function getConnection(): PDO {
     $host = $_ENV['DB_HOST'];
+    $port = $_ENV['DB_PORT'];
     $db   = $_ENV['DB_DATABASE'];
     $user = $_ENV['DB_USERNAME'];
     $pass = $_ENV['DB_PASSWORD'];
     $charset = $_ENV['DB_CHARSET'];
 
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
     $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

@@ -1,5 +1,5 @@
 # Use the official PHP 8.3 image with PHP-FPM
-FROM php:8.3-fpm
+FROM php:8.1-fpm
 
 # Install necessary PHP extensions for MySQL
 RUN docker-php-ext-install pdo pdo_mysql
